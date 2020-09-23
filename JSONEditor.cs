@@ -1,13 +1,12 @@
-﻿using System.Collections.Generic;
+using Newtonsoft.Json;
+using Newtonsoft.Json.Linq;
+using System;
+using System.Collections.Generic;
 using System.IO;
 using UnityEditor;
 using UnityEngine;
-using Newtonsoft.Json;
-using System;
-using Newtonsoft.Json.Linq;
-using System.Collections;
 
-public class JSONEditor : EditorWindow
+public class UnityJsonEditor : EditorWindow
 {
     #region Variables
     private JToken rootObject = null;
@@ -87,32 +86,50 @@ public class JSONEditor : EditorWindow
     [MenuItem("Tools/JSON Editor")]
     public static void ShowWindow()
     {
-        EditorWindow.GetWindow(typeof(JSONEditor));
+        EditorWindow.GetWindow(typeof(UnityJsonEditor));
     }
 
     private void Awake()
     {
-        boldFoldoutStyle = new GUIStyle(EditorStyles.foldout);
-        boldFoldoutStyle.fontStyle = FontStyle.Bold;
-        remButtonStyle = new GUIStyle(EditorStyles.miniButton);
-        remButtonStyle.stretchWidth = false;
-        remButtonStyle.fontStyle = FontStyle.Bold;
-        keyFieldStyle = new GUIStyle(EditorStyles.textField);
-        keyFieldStyle.stretchWidth = false;
-        typeTextStyle = new GUIStyle(EditorStyles.label);
-        typeTextStyle.alignment = TextAnchor.LowerRight;
-        textFieldStyle = new GUIStyle(EditorStyles.textField);
-        textFieldStyle.stretchWidth = false;
-        dropDownStyle = new GUIStyle(EditorStyles.popup);
-        dropDownStyle.stretchWidth = false;
-        btnAddStyle = new GUIStyle(EditorStyles.miniButton);
-        btnAddStyle.alignment = TextAnchor.LowerLeft;
-        dropDownCreateStyle = new GUIStyle(EditorStyles.popup);
-        dropDownCreateStyle.alignment = TextAnchor.LowerLeft;
-        dropDownCreateStyle.stretchWidth = false;
-        largeLabelStyle = new GUIStyle(EditorStyles.largeLabel);
-        largeLabelStyle.fontStyle = FontStyle.Bold;
-        largeLabelStyle.fontSize = 14;
+        boldFoldoutStyle = new GUIStyle(EditorStyles.foldout)
+        {
+            fontStyle = FontStyle.Bold
+        };
+        remButtonStyle = new GUIStyle(EditorStyles.miniButton)
+        {
+            stretchWidth = false,
+            fontStyle = FontStyle.Bold
+        };
+        keyFieldStyle = new GUIStyle(EditorStyles.textField)
+        {
+            stretchWidth = false
+        };
+        typeTextStyle = new GUIStyle(EditorStyles.label)
+        {
+            alignment = TextAnchor.LowerRight
+        };
+        textFieldStyle = new GUIStyle(EditorStyles.textField)
+        {
+            stretchWidth = false
+        };
+        dropDownStyle = new GUIStyle(EditorStyles.popup)
+        {
+            stretchWidth = false
+        };
+        btnAddStyle = new GUIStyle(EditorStyles.miniButton)
+        {
+            alignment = TextAnchor.LowerLeft
+        };
+        dropDownCreateStyle = new GUIStyle(EditorStyles.popup)
+        {
+            alignment = TextAnchor.LowerLeft,
+            stretchWidth = false
+        };
+        largeLabelStyle = new GUIStyle(EditorStyles.largeLabel)
+        {
+            fontStyle = FontStyle.Bold,
+            fontSize = 14
+        };
         boldLabelStyle = new GUIStyle(EditorStyles.boldLabel);
     }
 
@@ -177,12 +194,18 @@ public class JSONEditor : EditorWindow
             JObject obj = (JObject)rootObject;
             foreach (JProperty token in obj.Properties())
             {
-                if (token.Value.Type == JTokenType.Array)
-                    DisplayRowJArray(token.Value);
-                else if (token.Value.Type == JTokenType.Object)
-                    DisplayRowJObject(token.Value);
-                else
-                    DisplayRowJValue(token.Value);
+                switch (token.Value.Type)
+                {
+                    case JTokenType.Object:
+                        DisplayRowJObject(token.Value);
+                        break;
+                    case JTokenType.Array:
+                        DisplayRowJArray(token.Value);
+                        break;
+                    default:
+                        DisplayRowJValue(token.Value);
+                        break;
+                }
                 if (itemRemoved)
                     return;
             }
@@ -192,12 +215,18 @@ public class JSONEditor : EditorWindow
             JArray arr = (JArray)rootObject;
             foreach (JToken token in arr.Children())
             {
-                if (token.Type == JTokenType.Array)
-                    DisplayRowJArray(token);
-                else if (token.Type == JTokenType.Object)
-                    DisplayRowJObject(token);
-                else
-                    DisplayRowJValue(token);
+                switch (token.Type)
+                {
+                    case JTokenType.Object:
+                        DisplayRowJObject(token);
+                        break;
+                    case JTokenType.Array:
+                        DisplayRowJArray(token);
+                        break;
+                    default:
+                        DisplayRowJValue(token);
+                        break;
+                }
                 if (itemRemoved)
                     return;
             }
@@ -222,12 +251,18 @@ public class JSONEditor : EditorWindow
             GUILayout.BeginVertical();
             foreach (JProperty token in ((JObject)(objectToken)).Properties())
             {
-                if (token.Value.Type == JTokenType.Array)
-                    DisplayRowJArray(token.Value);
-                else if (token.Value.Type == JTokenType.Object)
-                    DisplayRowJObject(token.Value);
-                else
-                    DisplayRowJValue(token.Value);
+                switch (token.Value.Type)
+                {
+                    case JTokenType.Object:
+                        DisplayRowJObject(token.Value);
+                        break;
+                    case JTokenType.Array:
+                        DisplayRowJArray(token.Value);
+                        break;
+                    default:
+                        DisplayRowJValue(token.Value);
+                        break;
+                }
                 if (itemRemoved)
                     return;
             }
@@ -265,12 +300,18 @@ public class JSONEditor : EditorWindow
             GUILayout.BeginVertical();
             foreach (JToken kid in ((JArray)(objectToken)).Children())
             {
-                if (kid.Type == JTokenType.Array)
-                    DisplayRowJArray(kid);
-                else if (kid.Type == JTokenType.Object)
-                    DisplayRowJObject(kid);
-                else
-                    DisplayRowJValue(kid);
+                switch (kid.Type)
+                {
+                    case JTokenType.Object:
+                        DisplayRowJObject(kid);
+                        break;
+                    case JTokenType.Array:
+                        DisplayRowJArray(kid);
+                        break;
+                    default:
+                        DisplayRowJValue(kid);
+                        break;
+                }
                 if (itemRemoved)
                     return;
             }
@@ -302,16 +343,26 @@ public class JSONEditor : EditorWindow
         if (GUILayout.Button("Add Object", btnAddStyle))
         {
             JToken val = new JArray();
-            if (selected == 0)
-                val = new bool();
-            else if (selected == 1)
-                val = new int();
-            else if (selected == 2)
-                val = new double();
-            else if (selected == 3)
-                val = string.Empty;
-            else if (selected == 4)
-                val = new JObject();
+            switch (selected)
+            {
+                case 0:
+                    val = new bool();
+                    break;
+                case 1:
+                    val = new int();
+                    break;
+                case 2:
+                    val = new double();
+                    break;
+                case 3:
+                    val = string.Empty;
+                    break;
+                case 4:
+                    val = new JObject();
+                    break;
+                default:
+                    throw new ArgumentException("Invalid Object Type");
+            }
             if (parent.Type == JTokenType.Array)
             {
                 JArray array = (JArray)parent;
@@ -356,7 +407,6 @@ public class JSONEditor : EditorWindow
                 property.Replace(newToken);
             }
             catch (ArgumentException) { }
-            return;
         }
     }
 
