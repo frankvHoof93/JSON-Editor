@@ -5,7 +5,7 @@ using System.IO;
 using UnityEditor;
 using UnityEngine;
 
-namespace dev.vanHoof.UnityJsonEditor
+namespace dev.vanHoof.JsonEditor
 {
     /// <summary>
     /// Util-methods for displaying data in EditorWindow

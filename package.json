@@ -1,7 +1,7 @@
 {
-  "name": "dev.vanhoof.unity-json-editor",
+  "name": "dev.vanhoof.json-editor",
   "version": "1.1.0",
-  "displayName": "Unity Json Editor",
+  "displayName": "Json Editor",
   "description": "A lightweight and intuitive JSON viewer & editor built directly into the Unity Editor.",
   "type": "tool",
   "documentationUrl": "README.md",
@@ -25,4 +25,3 @@
     "url": "https://vanhoof.dev"
   }
 }
-

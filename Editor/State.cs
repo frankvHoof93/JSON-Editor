@@ -1,7 +1,7 @@
 using Newtonsoft.Json.Linq;
 using System.Collections.Generic;
 
-namespace dev.vanHoof.UnityJsonEditor
+namespace dev.vanHoof.JsonEditor
 {
     /// <summary>
     /// EditorWindow-State

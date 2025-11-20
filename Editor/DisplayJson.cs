@@ -4,7 +4,7 @@ using System.Collections.Generic;
 using UnityEditor;
 using UnityEngine;
 
-namespace dev.vanHoof.UnityJsonEditor
+namespace dev.vanHoof.JsonEditor
 {
     /// <summary>
     /// Util-methods used to display JSON in ScrollView

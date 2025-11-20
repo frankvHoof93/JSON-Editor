@@ -1,7 +1,7 @@
 using Newtonsoft.Json.Linq;
 using UnityEngine;
 
-namespace dev.vanHoof.UnityJsonEditor
+namespace dev.vanHoof.JsonEditor
 {
     /// <summary>
     /// A reference to a JSON-Asset(/file)

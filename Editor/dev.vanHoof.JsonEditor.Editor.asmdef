@@ -1,6 +1,6 @@
 {
-    "name": "dev.vanHoof.UnityJsonEditor.Editor",
-    "rootNamespace": "dev.vanHoof.UnityJsonEditor",
+    "name": "dev.vanHoof.JsonEditor.Editor",
+    "rootNamespace": "dev.vanHoof.JsonEditor",
     "references": [],
     "includePlatforms": [
         "Editor"

@@ -3,14 +3,14 @@ using System;
 using System.Collections.Generic;
 using UnityEditor;
 using UnityEngine;
-using JSON = dev.vanHoof.UnityJsonEditor.DisplayJson;
+using JSON = dev.vanHoof.JsonEditor.DisplayJson;
 
-namespace dev.vanHoof.UnityJsonEditor
+namespace dev.vanHoof.JsonEditor
 {
     /// <summary>
     /// EditorWindow used to display & edit JSON-files
     /// </summary>
-    internal class UnityJsonEditorWindow : EditorWindow
+    internal class JsonEditorWindow : EditorWindow
     {
         #region Variables
         private State state;
@@ -41,7 +41,7 @@ namespace dev.vanHoof.UnityJsonEditor
         public static void ShowWindow()
         {
             Display.InitStyles();
-            GetWindow(typeof(UnityJsonEditorWindow));
+            GetWindow(typeof(JsonEditorWindow));
         }
 
         private void OnEnable()

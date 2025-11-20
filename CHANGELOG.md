@@ -1,5 +1,5 @@
 # Changelog
-All notable changes to **Unity JSON Editor** will be documented here.
+All notable changes to **JSON Editor** will be documented here.
 
 ---
 
